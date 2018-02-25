@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <title>Workly test</title>
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <script>
+    function delay() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, 3000);
+      });
+    }
+
+    async function test() {
+      let w = workly('zworker.js');
+      await delay();
+      let count = await w.count;
+      console.log(count);
+    }
+
+    test();
+  </script>
+</body>
+
+</html>
