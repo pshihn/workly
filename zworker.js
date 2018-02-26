@@ -29,11 +29,19 @@ class Adder {
   }
 }
 
-function fadd(a, b) {
+function fAdd(a, b) {
   return a + b;
 }
 
-var _target = obj;
+function fDelayedAdd(a, b) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ result: a + b });
+    }, 2000);
+  });
+}
+
+var _target = fDelayedAdd;
 
 self.addEventListener('message', async event => {
   let data = event.data;

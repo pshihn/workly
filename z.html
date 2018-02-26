@@ -19,19 +19,26 @@
       let w = workly('zworker.js');
 
       // OBJ tests
-      console.log('count', await w.count);
-      await w.increment();
-      console.log('count', await w.count);
-      await w.increment();
-      console.log('count', await w.count);
-      console.log('stored', await w.stored);
-      w.stored = 21;
-      console.log('stored', await w.stored);
-      console.log('add', await w.add(4, 6));
-      console.log('add', await w.add(24, 225));
-      console.log('delayedAdd', await w.delayedAdd(13, 131));
+      // console.log('count', await w.count);
+      // await w.increment();
+      // console.log('count', await w.count);
+      // await w.increment();
+      // console.log('count', await w.count);
+      // console.log('stored', await w.stored);
+      // w.stored = 21;
+      // console.log('stored', await w.stored);
+      // console.log('add', await w.add(4, 6));
+      // console.log('add', await w.add(24, 225));
+      // console.log('delayedAdd', await w.delayedAdd(13, 131));
 
       // function tests
+      // console.log(await w(3, 4));
+      // console.log(await w(13, -4));
+
+      // function tests 2
+      console.log(await w(3, 4));
+      console.log(await w(13, -4));
+
     }
 
     test();
