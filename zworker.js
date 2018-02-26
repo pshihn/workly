@@ -1,5 +1,6 @@
 const obj = {
   count: 1,
+  stored: 0,
   increment() {
     this.count++;
   },
@@ -41,15 +42,22 @@ self.addEventListener('message', async event => {
   let id = data && data.id;
   if (id && data.type) {
     let msg = { id };
-    let ref = reduce(data.path);
+    const ref = reduce(data.path);
+    const refParent = reduce(data.path.slice(0, -1));
     switch (data.type) {
       case "GET":
         msg.value = ref;
         break;
+      case "SET":
+        let prop = data.path.length && data.path[data.path.length - 1];
+        if (prop) {
+          refParent[prop] = data.value;
+        }
+        msg.value = prop ? true : false;
+        break;
       case "APPLY":
         try {
-          let fnThis = reduce(data.path.slice(0, -1));
-          msg.value = await ref.apply(fnThis, data.args || []);
+          msg.value = await ref.apply(refParent, data.args || []);
         } catch (err) {
           msg.error = err;
         }
