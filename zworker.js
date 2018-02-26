@@ -1,5 +1,5 @@
 const obj = {
-  count: 0,
+  count: 1,
   increment() {
     this.count++;
   },
@@ -29,12 +29,23 @@ var _target = obj;
 
 self.addEventListener('message', event => {
   let data = event.data;
+  data.path = data.path || [];
+  const reduce = list => list.reduce((o, prop) => (o ? o[prop] : o), _target);
   let id = data && data.id;
   if (id && data.type) {
     let msg = { id };
+    let ref = reduce(data.path);
     switch (data.type) {
       case "GET":
-        msg.value = (data.path || []).reduce((o, prop) => (o ? o[prop] : o), _target);
+        msg.value = ref;
+        break;
+      case "APPLY":
+        try {
+          let fnThis = reduce(data.path.slice(0, -1));
+          msg.value = ref.apply(fnThis, data.args || []);
+        } catch (err) {
+          msg.error = err;
+        }
         break;
       default:
         console.log("message received", data);

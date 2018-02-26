@@ -11,15 +11,20 @@
       return new Promise(resolve => {
         setTimeout(() => {
           resolve();
-        }, 3000);
+        }, 1000);
       });
     }
 
     async function test() {
       let w = workly('zworker.js');
       await delay();
-      let count = await w.count;
-      console.log(count);
+      console.log(await w.count);
+      await w.increment();
+      console.log(await w.count);
+      await w.increment();
+      console.log(await w.count);
+      console.log(await w.add(4, 6));
+      console.log(await w.add(24, 225));
     }
 
     test();

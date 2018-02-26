@@ -41,7 +41,7 @@ function proxy(worker, path) {
     get(target, prop, receiver) {
       if (prop === 'then') {
         const p = worker.remote({ type: 'GET', path });
-        return Promise.resolve(p).then.bind(p);
+        return p.then.bind(p);
       }
       return proxy(worker, path.concat(prop));
     },
