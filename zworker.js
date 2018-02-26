@@ -5,6 +5,13 @@ const obj = {
   },
   add(a, b) {
     return a + b;
+  },
+  delayedAdd(a, b) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ result: a + b });
+      }, 2000);
+    });
   }
 };
 
@@ -27,7 +34,7 @@ function fadd(a, b) {
 
 var _target = obj;
 
-self.addEventListener('message', event => {
+self.addEventListener('message', async event => {
   let data = event.data;
   data.path = data.path || [];
   const reduce = list => list.reduce((o, prop) => (o ? o[prop] : o), _target);
@@ -42,7 +49,7 @@ self.addEventListener('message', event => {
       case "APPLY":
         try {
           let fnThis = reduce(data.path.slice(0, -1));
-          msg.value = ref.apply(fnThis, data.args || []);
+          msg.value = await ref.apply(fnThis, data.args || []);
         } catch (err) {
           msg.error = err;
         }

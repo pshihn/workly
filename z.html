@@ -17,7 +17,8 @@
 
     async function test() {
       let w = workly('zworker.js');
-      await delay();
+
+      // OBJ tests
       console.log(await w.count);
       await w.increment();
       console.log(await w.count);
@@ -25,6 +26,9 @@
       console.log(await w.count);
       console.log(await w.add(4, 6));
       console.log(await w.add(24, 225));
+      console.log(await w.delayedAdd(13, 131));
+
+      // function tests
     }
 
     test();
