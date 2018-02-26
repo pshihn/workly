@@ -41,7 +41,7 @@ function fDelayedAdd(a, b) {
   });
 }
 
-var _target = fDelayedAdd;
+var _target = obj;
 
 self.addEventListener('message', async event => {
   let data = event.data;
