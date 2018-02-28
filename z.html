@@ -19,17 +19,17 @@
       let w = workly('zworker.js');
 
       // OBJ tests
-      console.log('count', await w.count);
-      await w.increment();
-      console.log('count', await w.count);
-      await w.increment();
-      console.log('count', await w.count);
-      console.log('stored', await w.stored);
-      w.stored = 21;
-      console.log('stored', await w.stored);
-      console.log('add', await w.add(4, 6));
-      console.log('add', await w.add(24, 225));
-      console.log('delayedAdd', await w.delayedAdd(13, 131));
+      // console.log('count', await w.count);
+      // await w.increment();
+      // console.log('count', await w.count);
+      // await w.increment();
+      // console.log('count', await w.count);
+      // console.log('stored', await w.stored);
+      // w.stored = 21;
+      // console.log('stored', await w.stored);
+      // console.log('add', await w.add(4, 6));
+      // console.log('add', await w.add(24, 225));
+      // console.log('delayedAdd', await w.delayedAdd(13, 131));
 
       // function tests
       // console.log(await w(3, 4));
@@ -39,6 +39,24 @@
       // console.log(await w(3, 4));
       // console.log(await w(13, -4));
 
+      // Adder instance
+      // console.log(await w.addCount);
+      // console.log(await w.subCount);
+      // console.log(await w.subc);
+      // w.subCount = 2;
+      // console.log(await w.subc);
+      // console.log(await w.add(2, 9));
+      // console.log(await w.sub(2, 9));
+      // console.log(await w.delayedAdd(4, 15));
+      // console.log(await w.delayedSub(4, 15));
+
+      // Adder class
+      let wi = await new w();
+      console.log(wi);
+      console.log(await wi.addCount);
+      console.log(await wi.subCount);
+      console.log(await wi.subc);
+      console.log(await wi.add(2, 9));
     }
 
     test();

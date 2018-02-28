@@ -6,9 +6,9 @@ function workly(url) {
 }
 
 class WorklyProxy {
-  constructor(worker) {
+  constructor(worker, targetId) {
     this.w = worker;
-    this.uid = `${Date.now()}-${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
+    this.uid = targetId || `${Date.now()}-${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
     this.c = 0; // counter
     this.cbs = {} // callbacks
     worker.addEventListener('message', event => {
@@ -19,7 +19,7 @@ class WorklyProxy {
         if (event.data.error) {
           cb[1](event.data.error);
         } else {
-          cb[0](event.data.value);
+          cb[0](event.data.targetId ? proxy(new WorklyProxy(worker, event.data.targetId)) : event.data.value);
         }
       }
     });
@@ -29,7 +29,7 @@ class WorklyProxy {
     const id = `${this.uid}-${++this.c}`;
     return new Promise((resolve, reject) => {
       this.cbs[id] = [resolve, reject];
-      const msg = Object.assign({}, request, { id, args });
+      const msg = Object.assign({}, request, { id, args, target: this.uid });
       this.w.postMessage(msg);
     });
   }
@@ -40,6 +40,9 @@ function proxy(worker, path) {
   return new Proxy(function () { }, {
     get(target, prop, receiver) {
       if (prop === 'then') {
+        if (path.length === 0) {
+          return { then: () => receiver };
+        }
         const p = worker.remote({ type: 'GET', path });
         return p.then.bind(p);
       }
@@ -50,6 +53,9 @@ function proxy(worker, path) {
     },
     apply(target, thisArg, args) {
       return worker.remote({ type: 'APPLY', path, args });
+    },
+    construct(target, args, newTarget) {
+      return worker.remote({ type: 'CONSTRUCT', args });
     }
   });
 }
