@@ -7,17 +7,7 @@
 
 <body>
   <script>
-    function delay() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      });
-    }
-
-    async function test() {
-      let w = workly('zworker.js');
-
+    async function test2() {
       // OBJ tests
       // console.log('count', await w.count);
       // await w.increment();
@@ -31,35 +21,131 @@
       // console.log('add', await w.add(24, 225));
       // console.log('delayedAdd', await w.delayedAdd(13, 131));
 
-      // function tests
-      // console.log(await w(3, 4));
-      // console.log(await w(13, -4));
-
-      // function tests 2
-      // console.log(await w(3, 4));
-      // console.log(await w(13, -4));
-
-      // Adder instance
-      // console.log(await w.addCount);
-      // console.log(await w.subCount);
-      // console.log(await w.subc);
-      // w.subCount = 2;
-      // console.log(await w.subc);
-      // console.log(await w.add(2, 9));
-      // console.log(await w.sub(2, 9));
-      // console.log(await w.delayedAdd(4, 15));
-      // console.log(await w.delayedSub(4, 15));
-
       // Adder class
-      let wi = await new w();
-      console.log(wi);
+      // let wi = await new w();
+      // console.log(wi);
+      // console.log(await wi.addCount);
+      // console.log(await wi.subCount);
+      // console.log(await wi.subc);
+      // wi.subCount = 2;
+      // console.log(await wi.subc);
+      // console.log(await wi.add(2, 9));
+      // console.log(await wi.sub(2, 9));
+      // console.log(await wi.delayedAdd(4, 15));
+      // console.log(await wi.delayedSub(4, 15));
+    }
+
+    var obj = {
+      count: 1,
+      stored: 0,
+      increment() {
+        this.count++;
+      },
+      add(a, b) {
+        return a + b;
+      },
+      delayedAdd(a, b) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({ result: a + b });
+          }, 2000);
+        });
+      }
+    };
+
+    class Adder {
+      constructor() {
+        this.addCount = -1;
+        this.subCount = -1;
+      }
+
+      get subc() {
+        return this.subCount;
+      }
+
+      add(a, b) {
+        return a + b;
+      }
+
+      sub(a, b) {
+        return a - b;
+      }
+
+      delay() {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, 1000);
+        });
+      }
+
+      delayedAdd(a, b) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({ result: a + b });
+          }, 2000);
+        });
+      }
+
+      async delayedSub(a, b) {
+        await this.delay();
+        return a - b;
+      }
+    }
+
+    async function test1() {
+      const fAdd = function (a, b) {
+        let st = Date.now();
+        while (true) {
+          if ((Date.now() - st) > 1000) {
+            break;
+          }
+        }
+        return a + b;
+      };
+
+      const w = workly(fAdd);
+      console.log(await w(3, 4));
+      console.log(await w(13, -4));
+    }
+
+    async function test2() {
+      const fDelayedAdd = function (a, b) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({ result: a + b });
+          }, 2000);
+        });
+      }
+      const w = workly(fDelayedAdd);
+      console.log(await w(3, 4));
+      console.log(await w(13, -4));
+    }
+
+    async function test3() {
+      const w = workly(Adder);
+      const wi = await new w();
       console.log(await wi.addCount);
       console.log(await wi.subCount);
       console.log(await wi.subc);
+      wi.subCount = 2;
+      console.log(await wi.subc);
       console.log(await wi.add(2, 9));
+      console.log(await wi.sub(2, 9));
+      console.log(await wi.delayedAdd(4, 15));
+      console.log(await wi.delayedSub(4, 15));
     }
 
-    test();
+    async function runTests() {
+      console.log("Test 1");
+      await test1();
+      console.log("Test 2");
+      await test2();
+      console.log("Test 3");
+      await test3();
+    }
+
+    runTests();
   </script>
 </body>
 
