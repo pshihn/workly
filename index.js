@@ -1,4 +1,4 @@
-function workly(obj) {
+export default function workly(obj) {
   let url, ourl;
   if (typeof obj === 'function') {
     const tos = Function.prototype.toString;
