@@ -1,12 +1,13 @@
 # Workly
 
 * A really simple way to move a stand-alone function or a Class to a worker thread.
-* All calls are made asynchronous. Works greas with async/await
+* All calls are made asynchronous. Works great with async/await.
 * Only 1.3kb gzipped 
 
 ## Install
 
 Download the latest from [dist folder](https://github.com/pshihn/workly/tree/master/dist)
+
 or from npm:
 ```
 npm install --save workly
@@ -23,11 +24,11 @@ function busyAdd(a, b) {
   }
   return a + b;
 }
-async function init() {
-  let workerAdd = workly.proxy(busyAdd);
+
+(async () => {
+	let workerAdd = workly.proxy(busyAdd);
   console.log(await workerAdd(23, 16)); // 39
-}
-init();
+})();
 ```
 
 Or, in fact a Class
@@ -42,14 +43,14 @@ class Adder {
     return a + b;
   }
 }
-async function init() {
-  let WAdder = workly.proxy(Adder);
+
+(async () => {
+	let WAdder = workly.proxy(Adder);
   let a = await new WAdder();
   console.log(await a.count); // 0
   console.log(await a.add(23, 16)); // 39
   console.log(await a.count); // 1
-}
-init();
+})();
 ```
 
 ## Custom workers
