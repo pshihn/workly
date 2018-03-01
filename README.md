@@ -1,4 +1,4 @@
-# Workly  🏋️‍♀️→ 😄 
+# Workly    🏋️‍♀️→ 😄 
 
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
 * All calls are made asynchronous. Works great with async/await.
@@ -93,5 +93,8 @@ workly.expose(friendlyTime);
 If you're not using a custom worker, the function/class being pushed to the worker cannot depend on the containing scope.
 Since workers do not have access to DOM, DOM manipulation is not supported. 
 
-## License
+## Examples
+See the [examples folder](https://github.com/pshihn/workly/tree/master/examples)
+
+### License
 [MIT License](https://github.com/pshihn/workly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
