@@ -26,7 +26,7 @@ function busyAdd(a, b) {
 }
 
 (async () => {
-	let workerAdd = workly.proxy(busyAdd);
+  let workerAdd = workly.proxy(busyAdd);
   console.log(await workerAdd(23, 16)); // 39
 })();
 ```
@@ -45,7 +45,7 @@ class Adder {
 }
 
 (async () => {
-	let WAdder = workly.proxy(Adder);
+  let WAdder = workly.proxy(Adder);
   let a = await new WAdder();
   console.log(await a.count); // 0
   console.log(await a.add(23, 16)); // 39
