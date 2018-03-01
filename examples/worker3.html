@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <title>Workly custom worker sample - class</title>
+  <script src="../dist/workly.min.js"></script>
+</head>
+
+<body>
+  <script>
+    async function init() {
+      let RemoteClass = workly.proxy("./worker3.js");
+      let w = await new RemoteClass('yo');
+      console.log(await w.name);
+      console.log(await w.count);
+      let now = Date.now();
+      console.log(await w.displayValue(now - (24 * 60 * 60 * 1000)));
+      console.log(await w.count);
+    }
+    init();
+  </script>
+</body>
+
+</html>

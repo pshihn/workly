@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Workly function sample</title>
+  <title>Workly class sample</title>
   <script src="../dist/workly.min.js"></script>
 </head>
 
@@ -17,7 +17,7 @@
       }
     }
     async function init() {
-      let WAdder = workly(Adder);
+      let WAdder = workly.proxy(Adder);
       let instance = await new WAdder();
       console.log(await instance.count);
       console.log(await instance.add(23, 16));

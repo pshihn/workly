@@ -1,0 +1,22 @@
+<html>
+
+<head>
+  <title>Workly custom worker sample - object</title>
+  <script src="../dist/workly.min.js"></script>
+</head>
+
+<body>
+  <script>
+    async function init() {
+      let w = workly.proxy("./worker2.js");
+      console.log(await w.count);
+      await w.increment();
+      console.log(await w.count);
+      console.log(await w.add(12, 45));
+      console.log(await w.delayedAdd(11, 11));
+    }
+    init();
+  </script>
+</body>
+
+</html>
