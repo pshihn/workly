@@ -1,4 +1,4 @@
-importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.min.js');
+importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.js');
 
 function friendlyTime(value) {
   return moment(value).calendar(null, {
@@ -14,13 +14,4 @@ function friendlyTime(value) {
   });
 }
 
-function test() {
-  let now = Date.now();
-  console.log(friendlyTime(now));
-  console.log(friendlyTime(now - (24 * 60 * 60 * 1000)));
-  console.log(friendlyTime(now - (4 * 24 * 60 * 60 * 1000)));
-}
-
-test();
-
-console.log(workly);
+workly.expose(friendlyTime);

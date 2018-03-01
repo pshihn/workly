@@ -17,7 +17,7 @@
       return a + b;
     }
     async function init() {
-      let workerAdd = workly(busyAdd);
+      let workerAdd = workly.proxy(busyAdd);
       console.log(await workerAdd(23, 16));
     }
     init();

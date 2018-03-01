@@ -2,13 +2,27 @@
 
 <head>
   <title>Workly custom worker sample</title>
-  <script src="../dist/workly.min.js"></script>
+  <script src="../dist/workly.js"></script>
 </head>
 
 <body>
   <script>
     async function init() {
-      let w = workly("./worker.js");
+      let w = workly.proxy("./worker.js");
+      setTimeout(async () => {
+        let now = Date.now();
+        console.log(now);
+        console.log(await w.friendlyTime(now));
+      }, 1000);
+
+      // setTimeout(() => {
+
+      //   console.log(await w.friendlyTime(now));
+      // }, 2000);
+
+
+      // console.log(friendlyTime(now - (24 * 60 * 60 * 1000)));
+      // console.log(friendlyTime(now - (4 * 24 * 60 * 60 * 1000)));
     }
     init();
   </script>

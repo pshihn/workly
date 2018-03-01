@@ -1,20 +1,20 @@
-export default function workly(obj) {
+export function proxy(obj) {
   let url, ourl;
   if (typeof obj === 'function') {
     const tos = Function.prototype.toString;
-    url = ourl = URL.createObjectURL(new Blob([`${tos.call(randomInt)}\n(${tos.call(worklyExport)})(${tos.call(obj)})`]));
+    url = ourl = URL.createObjectURL(new Blob([`${tos.call(randomInt)}\n(${tos.call(expose)})(${tos.call(obj)})`]));
   } else if (typeof obj === 'string') {
     url = obj;
   }
   if (url) {
     let wrkr = new Worker(url);
     if (ourl) wrkr.oURL = ourl;
-    return proxy(new WorklyProxy(wrkr));
+    return _proxy(new WorklyProxy(wrkr));
   }
   throw "Workly only supports functions, classes, urls";
 }
 
-function proxy(worker, path) {
+function _proxy(worker, path) {
   path = path || [];
   return new Proxy(function () { }, {
     get(_, prop, receiver) {
@@ -25,7 +25,7 @@ function proxy(worker, path) {
         const p = worker.remote({ type: 'GET', path });
         return p.then.bind(p);
       }
-      return proxy(worker, path.concat(prop));
+      return _proxy(worker, path.concat(prop));
     },
     set(_, prop, value) {
       return worker.remote({ type: 'SET', path: path.concat(prop), value });
@@ -56,7 +56,7 @@ class WorklyProxy {
         if (event.data.error) {
           cb[1](new Error(event.data.error));
         } else {
-          cb[0](event.data.targetId ? proxy(new WorklyProxy(worker, event.data.targetId)) : event.data.value);
+          cb[0](event.data.targetId ? _proxy(new WorklyProxy(worker, event.data.targetId)) : event.data.value);
         }
       }
     });
@@ -72,7 +72,7 @@ class WorklyProxy {
 }
 
 function randomInt() { return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER); }
-function worklyExport(target) {
+export function expose(target) {
   const _target = target, _tmap = {};
   const expObj = obj => {
     const tid = `${Date.now()}-${randomInt()}`;
