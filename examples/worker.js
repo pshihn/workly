@@ -1,4 +1,4 @@
-importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.js');
+importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.min.js');
 
 function friendlyTime(value) {
   return moment(value).calendar(null, {
