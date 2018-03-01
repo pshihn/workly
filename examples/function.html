@@ -1,0 +1,27 @@
+<html>
+
+<head>
+  <title>Workly function sample</title>
+  <script src="../dist/workly.min.js"></script>
+</head>
+
+<body>
+  <script>
+    function busyAdd(a, b) {
+      let st = Date.now();
+      while (true) {
+        if ((Date.now() - st) > 2000) {
+          break;
+        }
+      }
+      return a + b;
+    }
+    async function init() {
+      let workerAdd = workly(busyAdd);
+      console.log(await workerAdd(23, 16));
+    }
+    init();
+  </script>
+</body>
+
+</html>

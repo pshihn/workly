@@ -1,0 +1,31 @@
+<html>
+
+<head>
+  <title>Workly function sample</title>
+  <script src="../dist/workly.min.js"></script>
+</head>
+
+<body>
+  <script>
+    class Adder {
+      constructor() {
+        this.count = 0;
+      }
+      add(a, b) {
+        this.count++;
+        return a + b;
+      }
+    }
+    async function init() {
+      let WAdder = workly(Adder);
+      let instance = await new WAdder();
+      console.log(await instance.count);
+      console.log(await instance.add(23, 16));
+      console.log(await instance.add(23, -16));
+      console.log(await instance.count);
+    }
+    init();
+  </script>
+</body>
+
+</html>
