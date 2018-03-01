@@ -2,7 +2,7 @@
 
 * A really simple way to move a stand-alone function or a Class to a worker thread.
 * All calls are made asynchronous. Works great with async/await.
-* Only 1.3kb gzipped 
+* Only 1.3kb gzipped.
 
 ## Install
 
@@ -58,6 +58,7 @@ class Adder {
 The above examples only work when the class/function is not dependent on the containing scope, i.e. other libraries or global objects. But, you can create a custom worker.js file and move the code in there. In the worker, you can expose your object/function/class using <i>workly.expose</i> method.
 
 In this example, the function depends on moment.js
+
 <b>worker.js</b>
 ```js
 importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.min.js');
@@ -78,18 +79,19 @@ workly.expose(friendlyTime);
 ```
 <b>main.js</b>
 ```js
-async function init() {
+(async () => {
   let w = workly.proxy("./worker.js");
   let now = Date.now();
   console.log(now);
   console.log(await w(now));
   console.log(await w(now - (24 * 60 * 60 * 1000)));
   console.log(await w(now - (4 * 24 * 60 * 60 * 1000)));
-}
-init();
+})();
 ```
 
 ## Caveats
 If you're not using a custom worker, the function/class being pushed to the worker cannot depend on the containing scope.
 Since workers do not have access to DOM, DOM manipulation is not supported. 
 
+## License
+[MIT License](https://github.com/pshihn/workly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
