@@ -1,4 +1,7 @@
-export default function workly(obj) {
+var workly = (function () {
+'use strict';
+
+function workly(obj) {
   let url, ourl;
   if (typeof obj === 'function') {
     const tos = Function.prototype.toString;
@@ -44,7 +47,7 @@ class WorklyProxy {
     this.w = worker;
     this.uid = targetId || `${Date.now()}-${randomInt()}`;
     this.c = 0; // counter
-    this.cbs = {} // callbacks
+    this.cbs = {}; // callbacks
     worker.addEventListener('message', event => {
       if (this.w.oURL) {
         try { URL.revokeObjectURL(this.w.oURL); } catch (err) { } finally { delete this.w.oURL; }
@@ -80,7 +83,7 @@ function worklyExport(target) {
     return tid;
   };
   self.addEventListener('message', async event => {
-    let data = event.data || {}
+    let data = event.data || {};
     data.path = data.path || [];
     let msgTarget = (data.target && _tmap[data.target]) || _target;
     const reduce = list => list.reduce((o, prop) => (o ? o[prop] : o), msgTarget);
@@ -120,3 +123,7 @@ function worklyExport(target) {
     }
   });
 }
+
+return workly;
+
+}());

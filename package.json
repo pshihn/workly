@@ -4,6 +4,8 @@
   "description": "Simple web worker wrapper using promises (and async/await)",
   "main": "index.js",
   "scripts": {
+    "build": "rollup index.js --o dist/workly.js --f iife  --name \"workly\" && npm run minify",
+    "minify": "babel-minify --mangle dist/workly.js >> dist/workly.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/pshihn/workly/issues"
   },
-  "homepage": "https://github.com/pshihn/workly#readme"
+  "homepage": "https://github.com/pshihn/workly#readme",
+  "devDependencies": {
+    "babel-minify": "^0.3.0",
+    "rollup": "^0.56.3"
+  }
 }
