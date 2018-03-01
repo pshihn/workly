@@ -1,4 +1,4 @@
-# Workly 🏋️‍♀️
+# Workly  🏋️‍♀️→ 😄 
 
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
 * All calls are made asynchronous. Works great with async/await.
