@@ -1,0 +1,17 @@
+<html>
+
+<head>
+  <title>Workly custom worker sample</title>
+  <script src="../dist/workly.min.js"></script>
+</head>
+
+<body>
+  <script>
+    async function init() {
+      let w = workly("./worker.js");
+    }
+    init();
+  </script>
+</body>
+
+</html>
