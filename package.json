@@ -1,6 +1,6 @@
 {
   "name": "workly",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Simple web worker wrapper using promises (and async/await)",
   "main": "index.js",
   "scripts": {
