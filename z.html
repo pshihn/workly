@@ -7,34 +7,6 @@
 
 <body>
   <script>
-    async function test2() {
-      // OBJ tests
-      // console.log('count', await w.count);
-      // await w.increment();
-      // console.log('count', await w.count);
-      // await w.increment();
-      // console.log('count', await w.count);
-      // console.log('stored', await w.stored);
-      // w.stored = 21;
-      // console.log('stored', await w.stored);
-      // console.log('add', await w.add(4, 6));
-      // console.log('add', await w.add(24, 225));
-      // console.log('delayedAdd', await w.delayedAdd(13, 131));
-
-      // Adder class
-      // let wi = await new w();
-      // console.log(wi);
-      // console.log(await wi.addCount);
-      // console.log(await wi.subCount);
-      // console.log(await wi.subc);
-      // wi.subCount = 2;
-      // console.log(await wi.subc);
-      // console.log(await wi.add(2, 9));
-      // console.log(await wi.sub(2, 9));
-      // console.log(await wi.delayedAdd(4, 15));
-      // console.log(await wi.delayedSub(4, 15));
-    }
-
     var obj = {
       count: 1,
       stored: 0,
@@ -91,6 +63,11 @@
         await this.delay();
         return a - b;
       }
+
+      async throwsError() {
+        // throw "this is an error";
+        throw new Error("this is an error");
+      }
     }
 
     async function test1() {
@@ -134,6 +111,7 @@
       console.log(await wi.sub(2, 9));
       console.log(await wi.delayedAdd(4, 15));
       console.log(await wi.delayedSub(4, 15));
+      // console.log(await wi.throwsError());
     }
 
     async function runTests() {

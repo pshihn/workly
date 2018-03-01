@@ -1,25 +1,23 @@
-// export default
 function workly(obj) {
-  let url;
+  let url, ourl;
   if (typeof obj === 'function') {
     const tos = Function.prototype.toString;
-    let script = `(${tos.call(worklyExport)})(${tos.call(obj)})`;
-    url = URL.createObjectURL(new Blob([script]));
+    url = ourl = URL.createObjectURL(new Blob([`(${tos.call(worklyExport)})(${tos.call(obj)})`]));
   } else if (typeof obj === 'string') {
     url = obj;
   }
   if (url) {
     let wrkr = new Worker(url);
+    if (ourl) wrkr.oURL = ourl;
     return proxy(new WorklyProxy(wrkr));
-  } else {
-    throw "Workly only supports functions, classes, urls";
   }
+  throw "Workly only supports functions, classes, urls";
 }
 
 function proxy(worker, path) {
   path = path || [];
   return new Proxy(function () { }, {
-    get(target, prop, receiver) {
+    get(_, prop, receiver) {
       if (prop === 'then') {
         if (path.length === 0) {
           return { then: () => receiver };
@@ -29,13 +27,13 @@ function proxy(worker, path) {
       }
       return proxy(worker, path.concat(prop));
     },
-    set(target, prop, value, receiver) {
+    set(_, prop, value) {
       return worker.remote({ type: 'SET', path: path.concat(prop), value });
     },
-    apply(target, thisArg, args) {
+    apply(_, thisArg, args) {
       return worker.remote({ type: 'APPLY', path, args });
     },
-    construct(target, args, newTarget) {
+    construct(_, args) {
       return worker.remote({ type: 'CONSTRUCT', args });
     }
   });
@@ -48,12 +46,15 @@ class WorklyProxy {
     this.c = 0; // counter
     this.cbs = {} // callbacks
     worker.addEventListener('message', event => {
+      if (this.w.oURL) {
+        try { URL.revokeObjectURL(this.w.oURL); } catch (err) { } finally { delete this.w.oURL; }
+      }
       let id = event.data && event.data.id;
       let cb = id && this.cbs[id];
       if (cb) {
         delete this.cbs[id];
         if (event.data.error) {
-          cb[1](event.data.error);
+          cb[1](new Error(event.data.error));
         } else {
           cb[0](event.data.targetId ? proxy(new WorklyProxy(worker, event.data.targetId)) : event.data.value);
         }
@@ -61,12 +62,11 @@ class WorklyProxy {
     });
   }
   remote(request) {
-    const args = request.args || [];
-    const id = `${this.uid}-${++this.c}`;
+    const args = request.args || [],
+      id = `${this.uid}-${++this.c}`;
     return new Promise((resolve, reject) => {
       this.cbs[id] = [resolve, reject];
-      const msg = Object.assign({}, request, { id, args, target: this.uid });
-      this.w.postMessage(msg);
+      this.w.postMessage(Object.assign({}, request, { id, args, target: this.uid }));
     });
   }
 }
@@ -103,8 +103,7 @@ function worklyExport(target) {
           try {
             msg.value = await ref.apply(refParent, data.args || []);
           } catch (err) {
-            // TODO: serialize error
-            msg.error = err;
+            msg.error = err.toString();
           }
           break;
         case "CONSTRUCT":
@@ -112,12 +111,8 @@ function worklyExport(target) {
             msg.value = new ref(...data.args);
             msg.targetId = expObj(msg.value);
           } catch (err) {
-            // TODO: serialize error
-            msg.error = err;
+            msg.error = err.toString();
           }
-          break;
-        default:
-          console.log("message received", data);
           break;
       }
       self.postMessage(msg);
