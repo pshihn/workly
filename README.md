@@ -89,8 +89,9 @@ workly.expose(friendlyTime);
 ```
 
 ### Caveats
-If you're not using a custom worker, the function/class being pushed to the worker cannot depend on the containing scope.
-Since workers do not have access to DOM, DOM manipulation is not supported. 
+* If you're not using a custom worker, the function/class being pushed to the worker cannot depend on the containing scope.
+* Since workers do not have access to DOM, DOM manipulation is not supported. 
+* Objects passed into functions are not passed by reference, so if the function in the worker updates the passed in object, it will not affect the object in the main scope. 
 
 ### Examples
 See the [examples folder](https://github.com/pshihn/workly/tree/master/examples)
