@@ -1,7 +1,7 @@
 {
   "name": "workly",
-  "version": "0.1.1",
-  "description": "Simple web worker wrapper using promises (and async/await)",
+  "version": "1.0.0",
+  "description": "A really simple way to move a stand-alone function/class to a web worker.",
   "main": "index.js",
   "scripts": {
     "build": "rollup index.js --o dist/workly.js --f iife  --name \"workly\" && npm run minify",
