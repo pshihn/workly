@@ -5,6 +5,7 @@ export function proxy(obj) {
     url = ourl = URL.createObjectURL(new Blob([`${tos.call(randomInt)}\n(${tos.call(expose)})(${tos.call(obj)})`]));
   } else if (typeof obj === 'string') {
     url = obj;
+    if (obj.indexOf('blob:') === 0) ourl = url;
   }
   if (url) {
     let wrkr = new Worker(url);
