@@ -2,7 +2,8 @@
   "name": "workly",
   "version": "1.0.0",
   "description": "A really simple way to move a stand-alone function/class to a web worker.",
-  "main": "index.js",
+  "main": "dist/workly.js",
+  "jsnext:main": "index.js",
   "scripts": {
     "build": "rollup index.js --o dist/workly.js --f umd --name \"workly\" && npm run minify",
     "minify": "babel-minify dist/workly.js -o dist/workly.min.js --mangle",
