@@ -1,6 +1,6 @@
 {
   "name": "workly",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A really simple way to move a stand-alone function/class to a web worker.",
   "main": "dist/workly.umd.js",
   "jsnext:main": "index.js",
