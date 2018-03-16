@@ -2,7 +2,7 @@
 
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
 * All calls are made asynchronous. Works great with async/await.
-* Only 1.1kB gzipped.
+* Only 1.01kB gzipped.
 
 ## Install
 
