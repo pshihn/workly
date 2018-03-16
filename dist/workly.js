@@ -1,5 +1,8 @@
-var workly = (function (exports) {
-'use strict';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.workly = {})));
+}(this, (function (exports) { 'use strict';
 
 function proxy(obj) {
   let url, ourl;
@@ -128,6 +131,6 @@ function expose(target) {
 exports.proxy = proxy;
 exports.expose = expose;
 
-return exports;
+Object.defineProperty(exports, '__esModule', { value: true });
 
-}({}));
+})));
