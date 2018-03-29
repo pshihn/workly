@@ -28,6 +28,8 @@ function busyAdd(a, b) {
 (async () => {
   let workerAdd = workly.proxy(busyAdd);
   console.log(await workerAdd(23, 16)); // 39
+  // the busyAdd is executed in a worker so
+  // the UI does not get blocked
 })();
 ```
 
@@ -46,7 +48,7 @@ class Adder {
 
 (async () => {
   let WAdder = workly.proxy(Adder);
-  let a = await new WAdder();
+  let a = await new WAdder(); // instance created/running in worker
   console.log(await a.count); // 0
   console.log(await a.add(23, 16)); // 39
   console.log(await a.count); // 1
