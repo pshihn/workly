@@ -1,6 +1,7 @@
 # Workly    🏋️‍♀️→ 😄 
 
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
+* Or, expose an object or function to the main thread.
 * All calls are made asynchronous. Works great with async/await.
 * Only 1.01kB gzipped.
 
@@ -100,3 +101,7 @@ See the [examples folder](https://github.com/pshihn/workly/tree/master/examples)
 
 ### License
 [MIT License](https://github.com/pshihn/workly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
+
+### You may also be interested in
+[windtalk](https://github.com/pshihn/windtalk) - Simplest way to communicate between windows or iframes. Work with objects/functions defined in another window or iframe.
+
