@@ -1,7 +1,7 @@
 # Workly    🏋️‍♀️→ 😄 
 
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
-* Or, expose an object or function in a worker to the main thread.
+* Or, **expose an object or function in a worker** to the main thread.
 * All calls are made asynchronous. Works great with async/await.
 * Only 1.01kB gzipped.
 
