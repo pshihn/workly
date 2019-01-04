@@ -1,4 +1,4 @@
-importScripts('../dist/workly.min.js');
+importScripts('../dist/workly.js');
 
 var obj = {
   count: 1,

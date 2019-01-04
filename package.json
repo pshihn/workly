@@ -1,15 +1,14 @@
 {
   "name": "workly",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "A really simple way to move a stand-alone function/class to a web worker.",
-  "main": "dist/workly.umd.js",
-  "jsnext:main": "index.js",
+  "source": "index.js",
+  "module": "dist/workly.m.js",
+  "main": "dist/workly.js",
+  "browser": "dist/workly.js",
+  "types": "dist/workly.d.ts",
   "scripts": {
-    "build": "npm run build-d && npm run build-umd",
-    "build-d": "rollup index.js --o dist/workly.js --f iife --name \"workly\" && npm run minify-d",
-    "minify-d": "babel-minify dist/workly.js -o dist/workly.min.js --mangle",
-    "build-umd": "rollup index.js --o dist/workly.umd.js --f umd --name \"workly\" && npm run minify-umd",
-    "minify-umd": "babel-minify dist/workly.umd.js -o dist/workly.umd.min.js --mangle",
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,7 +26,7 @@
   },
   "homepage": "https://github.com/pshihn/workly#readme",
   "devDependencies": {
-    "babel-minify": "^0.3.0",
-    "rollup": "^0.56.3"
+    "rollup": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.1"
   }
 }
