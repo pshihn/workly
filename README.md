@@ -3,7 +3,7 @@
 * A really simple way to move a stand-alone <b>function/class to a worker thread</b>.
 * Or, **expose an object or function in a worker** to the main thread.
 * All calls are made asynchronous. Works great with async/await.
-* Only 1.01kB gzipped.
+* Only 1kB gzipped.
 
 ## Install
 
@@ -63,7 +63,7 @@ In this example, the function depends on moment.js
 
 <b>worker.js</b>
 ```js
-importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.min.js');
+importScripts('https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.min.js', '../dist/workly.js');
 function friendlyTime(value) {
   return moment(value).calendar(null, {
     sameDay: function (now) {

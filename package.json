@@ -1,9 +1,12 @@
 {
   "name": "workly",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A really simple way to move a stand-alone function/class to a web worker.",
-  "main": "dist/workly.umd.js",
-  "jsnext:main": "index.js",
+  "source": "index.js",
+  "module": "dist/workly.m.js",
+  "main": "dist/workly.js",
+  "browser": "dist/workly.js",
+  "types": "dist/workly.d.ts",
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
