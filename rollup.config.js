@@ -15,6 +15,15 @@ export default [
   {
     input,
     output: {
+      file: `dist/workly.umd.js`,
+      format: 'umd',
+      name: 'workly'
+    },
+    plugins: [terser()]
+  },
+  {
+    input,
+    output: {
       file: `dist/workly.m.js`,
       format: 'esm'
     },
