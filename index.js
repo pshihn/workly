@@ -15,6 +15,10 @@ export function proxy(obj) {
   throw "Workly only supports functions, classes, urls";
 }
 
+export function link(worker) {
+  return _proxy(new WorklyProxy(worker));
+}
+
 function _proxy(worker, path) {
   path = path || [];
   return new Proxy(function () { }, {
